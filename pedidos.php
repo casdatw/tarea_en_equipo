@@ -66,7 +66,7 @@
                     echo '<td>' . $pedidoDisponible['direccion'] . '</td>';
                     echo '<td>';
                     echo '<form action="update_pedido.php" method="POST">';
-                    echo '<input type="hidden" name="pedido" value="' . $pedidoDisponible['nombre'] . '">';
+                    echo '<input type="hidden" name="pedido" value="' . $pedidoDisponible['id'] . '">';
                     echo '<button type="submit">Completado</button>';
                     echo '</form>';
                     echo '</td>';
