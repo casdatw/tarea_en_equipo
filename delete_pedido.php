@@ -21,7 +21,7 @@ require_once(__DIR__ . '/connection.php');
       mysqli_stmt_bind_param($stmt, "i", $_POST['pedido']);
 
       if (mysqli_stmt_execute($stmt)) {
-        echo '<h1>Pedido Actualizado</h1>';
+        echo '<h1>Pedido Borrado</h1>';
       } else {
         echo '<h1>Error al intentar borrar pedido</h1>';
       }
