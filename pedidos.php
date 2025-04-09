@@ -32,8 +32,8 @@
             <label for="email" name="email" class="email">Email:</label>
             <input type="email" name="email" class="emailIn">
 
-            <label for="platos" name="platos" class="platos">Plato elegido:</label>
-            <select name="platos" id="platos">
+            <label for="plato" name="plato" class="plato">Plato elegido:</label>
+            <select name="plato" id="plato">
                 <option value="plato1">Entrada</option>
                 <option value="plato2">Plato principal</option>
                 <option value="plato3">Postre</option>
