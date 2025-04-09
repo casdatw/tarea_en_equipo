@@ -33,7 +33,7 @@ require_once(__DIR__ . '/connection.php');
       if (mysqli_stmt_execute($stmt)) {
         echo '<h1>Pedido Creado</h1>';
       } else {
-        echo '<h1>Error al intentar actualizar</h1>';
+        echo '<h1>Error al intentar crear pedido</h1>';
       }
     }
 
