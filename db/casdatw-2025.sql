@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-04-2025 a las 11:48:08
+-- Tiempo de generación: 09-04-2025 a las 13:47:51
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,10 +31,13 @@ USE `casdatw-2025`;
 
 CREATE TABLE IF NOT EXISTS `pedido` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) NOT NULL,
+  `email` varchar(256) NOT NULL,
   `plato` varchar(256) NOT NULL,
+  `direccion` varchar(256) NOT NULL,
   `completado` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
