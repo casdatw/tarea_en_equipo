@@ -1,10 +1,14 @@
 <?php
+    require_once("./connection.php");
+
+    $conexion = sql_connection();
+
     // Mostrar todos los pedidos disponibles
-    $sqlPedidosDisponibles = "SELECT * FROM pedidos WHERE estado = 0";
+    $sqlPedidosDisponibles = "SELECT * FROM pedido WHERE completado=FALSE";
     $resultPedidosDisponibles = mysqli_query($conexion , $sqlPedidosDisponibles);
 
     // Pedidos completados
-    $sqlPedidosCompletos = "SELECT * FROM pedidos ";
+    $sqlPedidosCompletos = "SELECT * FROM pedido WHERE completado=TRUE";
     $resultPedidosCompletos = mysqli_query($conexion , $sqlPedidosCompletos);
 ?>
 
