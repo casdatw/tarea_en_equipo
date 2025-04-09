@@ -16,6 +16,9 @@
     <title>Document</title>
 </head>
 <body>
+    <?php
+        require_once 'header.php'
+    ?>
     <fieldset>
         <h1>NUEVOS PEDIDOS:</h1>
         <form action="insert_pedido.php" method="POST">
@@ -91,5 +94,9 @@
         echo '</table>';
         ?>
     </fieldset>
+
+    <?php
+        require_once 'footer.php'
+    ?>
 </body>
 </html>
