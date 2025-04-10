@@ -1,11 +1,17 @@
 <?php
+    require_once("./connection.php");
+
+    $conexion = sql_connection();
+
     // Mostrar todos los pedidos disponibles
-    $sqlPedidosDisponibles = "SELECT * FROM pedidos WHERE estado = 0";
+    $sqlPedidosDisponibles = "SELECT * FROM pedido WHERE completado=FALSE";
     $resultPedidosDisponibles = mysqli_query($conexion , $sqlPedidosDisponibles);
+    $pedidosDisponiblesError = $resultPedidosDisponibles ? null : mysqli_error($conexion);
 
     // Pedidos completados
-    $sqlPedidosCompletos = "SELECT * FROM pedidos ";
+    $sqlPedidosCompletos = "SELECT * FROM pedido WHERE completado=TRUE";
     $resultPedidosCompletos = mysqli_query($conexion , $sqlPedidosCompletos);
+    $pedidosCompletosError = $resultPedidosCompletos ? null : mysqli_error($conexion);
 ?>
 
 <!DOCTYPE html>
@@ -28,8 +34,8 @@
             <label for="email" name="email" class="email">Email:</label>
             <input type="email" name="email" class="emailIn">
 
-            <label for="platos" name="platos" class="platos">Plato elegido:</label>
-            <select name="platos" id="platos">
+            <label for="plato" name="plato" class="plato">Plato elegido:</label>
+            <select name="plato" id="plato">
                 <option value="plato1">Entrada</option>
                 <option value="plato2">Plato principal</option>
                 <option value="plato3">Postre</option>
@@ -47,25 +53,29 @@
     
         <?php
             print ("<h1>PEDIDOS REGISTRADOS:</h1>") ;
-            echo '<table>';
-            echo '<tr><th>Nombre</th><th>Email</th><th>Plato elegido</th><th>Dirección</th></tr>';
 
-            while ($pedidoDisponible = mysqli_fetch_array($resultPedidosDisponibles, MYSQLI_ASSOC)) {
-            
-            echo '<tr>';
-            echo '<td>' . $pedidoDisponible['nombre'] . '</td>';
-            echo '<td>' . $pedidoDisponible['email'] . '</td>';
-            echo '<td>' . $pedidoDisponible['plato'] . '</td>';
-            echo '<td>' . $pedidoDisponible['direccion'] . '</td>';
-            echo '<td>';
-            echo '<form action="update_pedido.php" method="POST">';
-            echo '<input type="hidden" name="pedido" value="' . $pedidoDisponible['nombre'] . '">';
-            echo '<button type="submit">Completado</button>';
-            echo '</form>';
-            echo '</td>';
-            echo '</tr>';
-        }
-        echo '</table>';
+            if ($pedidosDisponiblesError == null) {
+                echo '<table>';
+                echo '<tr><th>Nombre</th><th>Email</th><th>Plato elegido</th><th>Dirección</th></tr>';
+
+                while ($pedidoDisponible = mysqli_fetch_array($resultPedidosDisponibles, MYSQLI_ASSOC)) {
+                    echo '<tr>';
+                    echo '<td>' . $pedidoDisponible['nombre'] . '</td>';
+                    echo '<td>' . $pedidoDisponible['email'] . '</td>';
+                    echo '<td>' . $pedidoDisponible['plato'] . '</td>';
+                    echo '<td>' . $pedidoDisponible['direccion'] . '</td>';
+                    echo '<td>';
+                    echo '<form action="update_pedido.php" method="POST">';
+                    echo '<input type="hidden" name="pedido" value="' . $pedidoDisponible['id'] . '">';
+                    echo '<button type="submit">Completado</button>';
+                    echo '</form>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+                echo '</table>';
+            } else {
+                echo '<p class="db-error">', htmlspecialchars($pedidosDisponiblesError), '</p>';
+            }
         ?>
     </fieldset>
 
@@ -73,25 +83,29 @@
     
         <?php
             print ("<h1>PEDIDOS COMPLETADOS:</h1>") ;
-            echo '<table>';
-            echo '<tr><th>Nombre</th><th>Email</th><th>Plato elegido</th><th>Dirección</th></tr>';
 
-            while ($pedidoCompletado = mysqli_fetch_array($resultPedidosCompletados, MYSQLI_ASSOC)) {
-            
-            echo '<tr>';
-            echo '<td>' . $pedidoCompletado['nombre'] . '</td>';
-            echo '<td>' . $pedidoCompletado['email'] . '</td>';
-            echo '<td>' . $pedidoCompletado['plato'] . '</td>';
-            echo '<td>' . $pedidoCompletado['direccion'] . '</td>';
-            echo '<td>';
-            echo '<form action="delete_pedido.php" method="POST">';
-            echo '<input type="hidden" name="pedido" value="' . $pedidoCompletado['nombre'] . '">';
-            echo '<button type="submit">Borrar pedido</button>';
-            echo '</form>';
-            echo '</td>';
-            echo '</tr>';
+            if ($pedidosCompletosError == null) {
+                echo '<table>';
+                echo '<tr><th>Nombre</th><th>Email</th><th>Plato elegido</th><th>Dirección</th></tr>';
+
+                while ($pedidoCompletado = mysqli_fetch_array($resultPedidosCompletos, MYSQLI_ASSOC)) {
+                    echo '<tr>';
+                    echo '<td>' . $pedidoCompletado['nombre'] . '</td>';
+                    echo '<td>' . $pedidoCompletado['email'] . '</td>';
+                    echo '<td>' . $pedidoCompletado['plato'] . '</td>';
+                    echo '<td>' . $pedidoCompletado['direccion'] . '</td>';
+                    echo '<td>';
+                    echo '<form action="delete_pedido.php" method="POST">';
+                    echo '<input type="hidden" name="pedido" value="' . $pedidoCompletado['id'] . '">';
+                    echo '<button type="submit">Borrar pedido</button>';
+                    echo '</form>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+            echo '</table>';
+        } else {
+          echo '<p class="db-error">', htmlspecialchars($pedidosCompletosError), '</p>';
         }
-        echo '</table>';
         ?>
     </fieldset>
 
@@ -100,3 +114,4 @@
     ?>
 </body>
 </html>
+
